@@ -2,6 +2,8 @@
 
 namespace DataRecord;
 
+use ReflectionClass;
+
 abstract class DataRecord
 {
     public static function fromArray(array $data): static
