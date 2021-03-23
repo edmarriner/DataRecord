@@ -1,8 +1,10 @@
 <?php
 
-namespace DataRecord;
+namespace Validators\DataRecord;
 
 use Attribute;
+use DataRecord\Validator;
+use DataRecord\ValidatorResult;
 
 #[Attribute]
 class Numeric implements Validator

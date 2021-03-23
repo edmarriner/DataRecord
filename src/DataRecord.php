@@ -3,6 +3,7 @@
 namespace DataRecord;
 
 use ReflectionClass;
+use ReflectionParameter;
 
 abstract class DataRecord
 {
@@ -10,14 +11,30 @@ abstract class DataRecord
     {
         $reflection = new ReflectionClass(static::class);
         $params = $reflection->getConstructor()->getParameters();
+
         $args = [];
-        foreach ($params as $param) {
-            if (isset($data[$param->name])) {
-                $args[$param->name] = $data[$param->name];
+
+        foreach($params as $param) {
+
+            $propAttribute = $param->getAttributes('prop');
+
+            $name = $param->name;
+
+            if($propAttribute && $propAttribute[0]['fromArrayName']){
+                $name = $propAttribute['fromArrayName'];
+            }
+
+            if (isset($data[$name])) {
+                $args[$param->name] = $data[$name];
             } else {
-                $args[$param->name] = null;
+                if($param->allowsNull()) {
+                    $args[$param->name] = null;
+                } else {
+                    throw new \Exception('Missing parameter');
+                }
             }
         }
+
         return new static(...array_values($args));
     }
 

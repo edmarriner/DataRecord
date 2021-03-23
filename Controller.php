@@ -2,9 +2,9 @@
 namespace App;
 
 use DataRecord\DataRecord;
-use DataRecord\Numeric;
 use DataRecord\Opts;
 use DataRecord\Prop;
+use Validators\DataRecord\Numeric;
 
 require __DIR__ . '/vendor/autoload.php';
 
